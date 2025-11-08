@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Job Directory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .filter-title {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #4a5bdc;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #4a5bdc;
+            background: white;
+            color: #4a5bdc;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: #4a5bdc;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #4a5bdc;
+            color: white;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #4a5bdc;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #4a5bdc;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .student-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .student-field {
+            display: inline-block;
+            background: #e8ecff;
+            color: #4a5bdc;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .student-email {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .student-domains {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .domain-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Student Job Directory</h1>
+        <p>Find talented students ready for their next opportunity</p>
+    </div>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalStudents">28</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="displayedStudents">28</div>
+                <div class="stat-label">Displayed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Fields Available</div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-title">Filter by Field</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-field="all">All Students</button>
+                <button class="filter-btn" data-field="Web Design">Web Design</button>
+                <button class="filter-btn" data-field="Logo Design">Logo Design</button>
+                <button class="filter-btn" data-field="MS Excel">MS Excel</button>
+                <button class="filter-btn" data-field="Video Editing">Video Editing</button>
+                <button class="filter-btn" data-field="Content Writing">Content Writing</button>
+            </div>
+        </div>
+
+        <div class="students-grid" id="studentsGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            No students found in this field
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Made by Prabhat (Leader)</p>
+    </div>
+
+    <script>
+        const students = [
+            { name: "Ismail", field: "Web Design", email: "ismail@example.com", domains: ["HTML/CSS", "Bootstrap", "Responsive Design"] },
+            { name: "Nitin Sharma", field: "Logo Design", email: "nitin.sharma@example.com", domains: ["Adobe Illustrator", "Brand Identity", "Vector Graphics"] },
+            { name: "Farmaan", field: "Video Editing", email: "farmaan@example.com", domains: ["Premiere Pro", "After Effects", "Color Grading"] },
+            { name: "Subhan Ansari", field: "Web Design", email: "subhan.ansari@example.com", domains: ["Figma", "UI Design", "WordPress"] },
+            { name: "Samad Saifi", field: "Content Writing", email: "samad.saifi@example.com", domains: ["SEO Writing", "Blog Posts", "Copywriting"] },
+            { name: "Md. Ayaan", field: "MS Excel", email: "md.ayaan@example.com", domains: ["Data Analysis", "Pivot Tables", "Macros"] },
+            { name: "Md. Aman", field: "Web Design", email: "md.aman@example.com", domains: ["JavaScript", "Animation", "Web Graphics"] },
+            { name: "Rohit Kumar", field: "Logo Design", email: "rohit.kumar@example.com", domains: ["Photoshop", "Logo Design", "Brand Guidelines"] },
+            { name: "Harsh", field: "Video Editing", email: "harsh@example.com", domains: ["Final Cut Pro", "Motion Graphics", "Sound Design"] },
+            { name: "Prabhat", field: "Web Design", email: "prabhat@example.com", domains: ["Full Stack Design", "React", "Tailwind CSS"] },
+            { name: "Suraj Gupta", field: "Content Writing", email: "suraj.gupta@example.com", domains: ["Technical Writing", "Article Writing", "Proofreading"] },
+            { name: "Dev Chauhan", field: "MS Excel", email: "dev.chauhan@example.com", domains: ["Advanced Formulas", "Data Visualization", "VBA"] },
+            { name: "Shivom", field: "Video Editing", email: "shivom@example.com", domains: ["DaVinci Resolve", "Video Effects", "Transitions"] },
+            { name: "Prince", field: "Web Design", email: "prince@example.com", domains: ["Webflow", "CSS Animations", "UX Design"] },
+            { name: "Aditya Singh Rajput", field: "Logo Design", email: "aditya.singh@example.com", domains: ["CorelDRAW", "Typography", "Icon Design"] },
+            { name: "Sumit", field: "Content Writing", email: "sumit@example.com", domains: ["Social Media Content", "Creative Writing", "Editing"] },
+            { name: "Sarfaraz", field: "MS Excel", email: "sarfaraz@example.com", domains: ["Financial Modeling", "Dashboards", "Charts"] },
+            { name: "Sachin", field: "Video Editing", email: "sachin@example.com", domains: ["YouTube Editing", "Thumbnails", "Shorts"] },
+            { name: "Arjun Singh Baghel", field: "Web Design", email: "arjun.singh@example.com", domains: ["Landing Pages", "E-commerce", "Prototyping"] },
+            { name: "Sachin Singh", field: "Logo Design", email: "sachin.singh@example.com", domains: ["Minimalist Design", "Business Cards", "Branding"] },
+            { name: "Manjeet Kumar", field: "MS Excel", email: "manjeet.kumar@example.com", domains: ["Reporting", "Data Entry", "Automation"] },
+            { name: "Sahil", field: "Content Writing", email: "sahil@example.com", domains: ["Web Content", "Email Marketing", "Product Descriptions"] },
+            { name: "Harsh", field: "Video Editing", email: "harsh2@example.com", domains: ["Instagram Reels", "TikTok", "Mobile Editing"] },
+            { name: "Nishant", field: "Logo Design", email: "nishant@example.com", domains: ["3D Logos", "Mascot Design", "Print Design"] },
+            { name: "Shubam", field: "Web Design", email: "shubam@example.com", domains: ["Modern Design", "Grid Layouts", "Accessibility"] },
+            { name: "Anuj", field: "Content Writing", email: "anuj@example.com", domains: ["Scriptwriting", "Storytelling", "Research"] },
+            { name: "Anuj", field: "MS Excel", email: "anuj2@example.com", domains: ["Statistical Analysis", "Power Query", "Forecasting"] },
+            { name: "Aryan Saini", field: "Video Editing", email: "aryan.saini@example.com", domains: ["Cinematic Editing", "Color Correction", "Audio Mixing"] }
+        ];
+
+        function displayStudents(filteredStudents) {
+            const grid = document.getElementById('studentsGrid');
+            const noResults = document.getElementById('noResults');
+            const displayedCount = document.getElementById('displayedStudents');
+
+            if (filteredStudents.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                displayedCount.textContent = '0';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            displayedCount.textContent = filteredStudents.length;
+
+            grid.innerHTML = filteredStudents.map(student => `
+                <div class="student-card">
+                    <div class="student-name">${student.name}</div>
+                    <div class="student-field">${student.field}</div>
+                    <div class="student-email">📧 ${student.email}</div>
+                    <div class="student-domains">
+                        ${student.domains.map(domain => `<span class="domain-tag">${domain}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterStudents(field) {
+            if (field === 'all') {
+                displayStudents(students);
+            } else {
+                const filtered = students.filter(student => student.field === field);
+                displayStudents(filtered);
+            }
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterStudents(this.dataset.field);
+            });
+        });
+
+        displayStudents(students);
+    </script>
+</body>
+</html>
