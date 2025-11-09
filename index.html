@@ -1,444 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Job Directory</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Job Directory</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa;
-            color: #333;
-        }
+  <!-- ✅ Updated Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-9Q1rW6u2q4+Lf1+ahm6y+MxRPb6YTXZQ7rwL77xFXslQn9dDRj7E4gXyH8AvQ2FUw9DpQj5UpthbE9I6S/8gLw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 
-        .header {
-            background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
 
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
+    .header {
+      background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80")
+        center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
 
-        .filter-section {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-            transition: all 0.3s ease;
-        }
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
 
-        .filter-section:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-        .filter-title {
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            color: #4a5bdc;
-        }
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: #4a5bdc;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        .filter-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+    .logo-text {
+      font-size: 1.8em;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-        .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid #4a5bdc;
-            background: white;
-            color: #4a5bdc;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95em;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            position: relative;
-            overflow: hidden;
-        }
+    .hero-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin: -80px auto 40px;
+      max-width: 1000px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
 
-        .filter-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: #4a5bdc;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-            z-index: 0;
-        }
+    .hero-text h2 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 15px;
+    }
 
-        .filter-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+    .hero-text p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
 
-        .filter-btn:hover {
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 91, 220, 0.4);
-        }
+    .hero-image img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
 
-        .filter-btn span {
-            position: relative;
-            z-index: 1;
-        }
+    .cta-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #4a5bdc;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
 
-        .filter-btn.active {
-            background: #4a5bdc;
-            color: white;
-            box-shadow: 0 5px 15px rgba(74, 91, 220, 0.3);
-        }
+    .cta-button:hover {
+      background: #6b7dff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(74, 91, 220, 0.4);
+    }
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
 
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
+    .filter-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
 
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(74, 91, 220, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
+    .filter-title {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #4a5bdc;
+    }
 
-        .stat-card:hover::after {
-            width: 300px;
-            height: 300px;
-        }
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-5px) rotate(2deg);
-            box-shadow: 0 10px 25px rgba(74, 91, 220, 0.2);
-        }
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid #4a5bdc;
+      background: white;
+      color: #4a5bdc;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.4s ease;
+    }
 
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #4a5bdc;
-            margin-bottom: 5px;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
+    .filter-btn:hover {
+      background: #4a5bdc;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(74, 91, 220, 0.4);
+    }
 
-        .stat-card:hover .stat-number {
-            transform: scale(1.2);
-            color: #6b7dff;
-        }
+    .filter-btn.active {
+      background: #4a5bdc;
+      color: white;
+    }
 
-        .stat-label {
-            color: #666;
-            font-size: 1em;
-            position: relative;
-            z-index: 1;
-        }
+    .students-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
 
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
+    .student-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #4a5bdc;
+      transition: all 0.3s ease;
+    }
 
-        .student-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-left: 4px solid #4a5bdc;
-            position: relative;
-            overflow: hidden;
-        }
+    .student-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
 
-        .student-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(74, 91, 220, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
+    .student-field {
+      display: inline-block;
+      background: #e8ecff;
+      color: #4a5bdc;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
 
-        .student-card:hover::before {
-            left: 100%;
-        }
+    .student-email {
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 8px;
+    }
 
-        .student-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(74, 91, 220, 0.3);
-            border-left: 4px solid #6b7dff;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-        }
+    .student-domains {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
 
-        .student-name {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-            transition: all 0.3s ease;
-        }
+    .domain-tag {
+      background: #f0f0f0;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.85em;
+      color: #555;
+    }
 
-        .student-card:hover .student-name {
-            color: #4a5bdc;
-            transform: translateX(5px);
-        }
+    .footer {
+      background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 60px;
+      position: relative;
+    }
 
-        .student-field {
-            display: inline-block;
-            background: #e8ecff;
-            color: #4a5bdc;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
+    .footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80")
+        center/cover;
+      opacity: 0.1;
+      z-index: 0;
+    }
 
-        .student-card:hover .student-field {
-            background: #4a5bdc;
-            color: white;
-            transform: scale(1.05);
-        }
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
 
-        .student-email {
-            color: #666;
-            font-size: 0.95em;
-            margin-bottom: 8px;
-            word-break: break-all;
-            transition: all 0.3s ease;
-        }
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
 
-        .student-card:hover .student-email {
-            color: #4a5bdc;
-        }
+    .footer-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
 
-        .student-domains {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .domain-tag {
-            background: #f0f0f0;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            color: #555;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .domain-tag:hover {
-            background: #6b7dff;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-            font-size: 1.2em;
-        }
-
-        .footer {
-            background: linear-gradient(135deg, #4a5bdc 0%, #6b7dff 100%);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-        }
-
-        .footer p {
-            font-size: 1.1em;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .filter-buttons {
-                justify-content: center;
-            }
-
-            .students-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    .footer-icon:hover {
+      background: white;
+      color: #4a5bdc;
+      transform: translateY(-5px) rotate(360deg);
+    }
+  </style>
 </head>
+
 <body>
-    <div class="header">
-        <h1>Student Job Directory</h1>
-        <p>Find talented students ready for their next opportunity</p>
+  <div class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="logo-text">TalentHub</div>
+      </div>
+      <h1>Student Job Directory</h1>
+      <p>Find talented students ready for their next opportunity</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero-section">
+      <div class="hero-text">
+        <h2>Connect with Skilled Students</h2>
+        <p>Browse through our curated list of talented students specializing in shorthand, office procedures, and practical training. Each student brings unique skills to help your organization grow.</p>
+        <button
+          class="cta-button"
+          onclick="document.getElementById('studentsGrid').scrollIntoView({ behavior: 'smooth' })"
+        >
+          <i class="fas fa-rocket"></i> Explore Talent
+        </button>
+      </div>
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80"
+          alt="Students working together"
+        />
+      </div>
     </div>
 
-    <div class="container">
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-number" id="totalStudents">28</div>
-                <div class="stat-label">Total Students</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="displayedStudents">28</div>
-                <div class="stat-label">Displayed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Fields Available</div>
-            </div>
-        </div>
-
-        <div class="filter-section">
-            <div class="filter-title">Filter by Field</div>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-field="all"><span>All Students</span></button>
-                <button class="filter-btn" data-field="Web Design"><span>Web Design</span></button>
-                <button class="filter-btn" data-field="Logo Design"><span>Logo Design</span></button>
-                <button class="filter-btn" data-field="MS Excel"><span>MS Excel</span></button>
-                <button class="filter-btn" data-field="Video Editing"><span>Video Editing</span></button>
-                <button class="filter-btn" data-field="Content Writing"><span>Content Writing</span></button>
-            </div>
-        </div>
-
-        <div class="students-grid" id="studentsGrid"></div>
-        <div class="no-results" id="noResults" style="display: none;">
-            No students found in this field
-        </div>
+    <div class="filter-section">
+      <div class="filter-title"><i class="fas fa-filter"></i> Filter by Field</div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-field="all"><span><i class="fas fa-th"></i> All Students</span></button>
+        <button class="filter-btn" data-field="Shorthand"><span><i class="fas fa-pencil-alt"></i> Shorthand</span></button>
+        <button class="filter-btn" data-field="Office Procedure"><span><i class="fas fa-building"></i> Office Procedure</span></button>
+        <button class="filter-btn" data-field="Practice"><span><i class="fas fa-tasks"></i> Practice</span></button>
+      </div>
     </div>
 
-    <div class="footer">
-        <p>Made by Prabhat (Leader)</p>
+    <div class="students-grid" id="studentsGrid"></div>
+    <div class="no-results" id="noResults" style="display: none;">No students found in this field</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-content">
+      <p><i class="fas fa-crown"></i> Made by Prabhat (Leader)</p>
+      <p style="font-size: 0.9em; opacity: 0.8;">Connecting talent with opportunities</p>
+      <div class="footer-icons">
+        <div class="footer-icon"><i class="fab fa-github"></i></div>
+        <div class="footer-icon"><i class="fab fa-linkedin"></i></div>
+        <div class="footer-icon"><i class="fab fa-twitter"></i></div>
+        <div class="footer-icon"><i class="fas fa-envelope"></i></div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const students = [
-            { name: "Ismail", field: "Web Design", email: "ismail@example.com", domains: ["HTML/CSS", "Bootstrap", "Responsive Design"] },
-            { name: "Nitin Sharma", field: "Logo Design", email: "nitin.sharma@example.com", domains: ["Adobe Illustrator", "Brand Identity", "Vector Graphics"] },
-            { name: "Farmaan", field: "Video Editing", email: "farmaan@example.com", domains: ["Premiere Pro", "After Effects", "Color Grading"] },
-            { name: "Subhan Ansari", field: "Web Design", email: "subhan.ansari@example.com", domains: ["Figma", "UI Design", "WordPress"] },
-            { name: "Samad Saifi", field: "Content Writing", email: "samad.saifi@example.com", domains: ["SEO Writing", "Blog Posts", "Copywriting"] },
-            { name: "Md. Ayaan", field: "MS Excel", email: "md.ayaan@example.com", domains: ["Data Analysis", "Pivot Tables", "Macros"] },
-            { name: "Md. Aman", field: "Web Design", email: "md.aman@example.com", domains: ["JavaScript", "Animation", "Web Graphics"] },
-            { name: "Rohit Kumar", field: "Logo Design", email: "rohit.kumar@example.com", domains: ["Photoshop", "Logo Design", "Brand Guidelines"] },
-            { name: "Harsh", field: "Video Editing", email: "harsh@example.com", domains: ["Final Cut Pro", "Motion Graphics", "Sound Design"] },
-            { name: "Prabhat", field: "Web Design", email: "prabhat@example.com", domains: ["Full Stack Design", "React", "Tailwind CSS"] },
-            { name: "Suraj Gupta", field: "Content Writing", email: "suraj.gupta@example.com", domains: ["Technical Writing", "Article Writing", "Proofreading"] },
-            { name: "Dev Chauhan", field: "MS Excel", email: "dev.chauhan@example.com", domains: ["Advanced Formulas", "Data Visualization", "VBA"] },
-            { name: "Shivom", field: "Video Editing", email: "shivom@example.com", domains: ["DaVinci Resolve", "Video Effects", "Transitions"] },
-            { name: "Prince", field: "Web Design", email: "prince@example.com", domains: ["Webflow", "CSS Animations", "UX Design"] },
-            { name: "Aditya Singh Rajput", field: "Logo Design", email: "aditya.singh@example.com", domains: ["CorelDRAW", "Typography", "Icon Design"] },
-            { name: "Sumit", field: "Content Writing", email: "sumit@example.com", domains: ["Social Media Content", "Creative Writing", "Editing"] },
-            { name: "Sarfaraz", field: "MS Excel", email: "sarfaraz@example.com", domains: ["Financial Modeling", "Dashboards", "Charts"] },
-            { name: "Sachin", field: "Video Editing", email: "sachin@example.com", domains: ["YouTube Editing", "Thumbnails", "Shorts"] },
-            { name: "Arjun Singh Baghel", field: "Web Design", email: "arjun.singh@example.com", domains: ["Landing Pages", "E-commerce", "Prototyping"] },
-            { name: "Sachin Singh", field: "Logo Design", email: "sachin.singh@example.com", domains: ["Minimalist Design", "Business Cards", "Branding"] },
-            { name: "Manjeet Kumar", field: "MS Excel", email: "manjeet.kumar@example.com", domains: ["Reporting", "Data Entry", "Automation"] },
-            { name: "Sahil", field: "Content Writing", email: "sahil@example.com", domains: ["Web Content", "Email Marketing", "Product Descriptions"] },
-            { name: "Harsh", field: "Video Editing", email: "harsh2@example.com", domains: ["Instagram Reels", "TikTok", "Mobile Editing"] },
-            { name: "Nishant", field: "Logo Design", email: "nishant@example.com", domains: ["3D Logos", "Mascot Design", "Print Design"] },
-            { name: "Shubam", field: "Web Design", email: "shubam@example.com", domains: ["Modern Design", "Grid Layouts", "Accessibility"] },
-            { name: "Anuj", field: "Content Writing", email: "anuj@example.com", domains: ["Scriptwriting", "Storytelling", "Research"] },
-            { name: "Anuj", field: "MS Excel", email: "anuj2@example.com", domains: ["Statistical Analysis", "Power Query", "Forecasting"] },
-            { name: "Aryan Saini", field: "Video Editing", email: "aryan.saini@example.com", domains: ["Cinematic Editing", "Color Correction", "Audio Mixing"] }
-        ];
+  <script>
+    const students = [
+  { name: "Ismail", field: "Shorthand", email: "ismail@example.com", domains: ["Pitman Shorthand", "Gregg Shorthand", "Speed Writing"] },
+  { name: "Nitin Sharma", field: "Office Procedure", email: "nitin.sharma@example.com", domains: ["Filing Systems", "Office Management", "Documentation"] },
+  { name: "Farmaan", field: "Practice", email: "farmaan@example.com", domains: ["Professional Training", "Workplace Skills", "Business Ethics"] },
+  { name: "Subhan Ansari", field: "Shorthand", email: "subhan.ansari@example.com", domains: ["Dictation", "Transcription", "Note Taking"] },
+  { name: "Samad Saifi", field: "Office Procedure", email: "samad.saifi@example.com", domains: ["Communication Skills", "Record Keeping", "Office Etiquette"] },
+  { name: "Md. Ayaan", field: "Practice", email: "md.ayaan@example.com", domains: ["Practical Application", "Work Experience", "Skill Development"] },
+  { name: "Md. Aman", field: "Shorthand", email: "md.aman@example.com", domains: ["Fast Writing", "Stenography", "Speed Dictation"] },
+  { name: "Rohit Kumar", field: "Office Procedure", email: "rohit.kumar@example.com", domains: ["Meeting Management", "Correspondence", "Office Coordination"] },
+  { name: "Harsh", field: "Practice", email: "harsh@example.com", domains: ["Hands-on Training", "Real-world Application", "Industry Practice"] },
+  { name: "Prabhat", field: "Shorthand", email: "prabhat@example.com", domains: ["Advanced Shorthand", "Legal Transcription", "Medical Terminology"] },
+  { name: "Suraj Gupta", field: "Office Procedure", email: "suraj.gupta@example.com", domains: ["Administrative Tasks", "Scheduling", "Office Protocols"] },
+  { name: "Dev Chauhan", field: "Practice", email: "dev.chauhan@example.com", domains: ["Internship Experience", "Professional Skills", "Career Readiness"] },
+  { name: "Shivom", field: "Shorthand", email: "shivom@example.com", domains: ["Court Reporting", "Real-time Transcription", "Verbatim Writing"] },
+  { name: "Prince", field: "Office Procedure", email: "prince@example.com", domains: ["Data Management", "Office Technology", "Business Processes"] },
+  { name: "Aditya Singh Rajput", field: "Practice", email: "aditya.singh@example.com", domains: ["Field Work", "Practical Sessions", "Skill Application"] },
+  { name: "Sumit", field: "Shorthand", email: "sumit@example.com", domains: ["Business Shorthand", "Minutes Writing", "Conference Notes"] },
+  { name: "Sarfaraz", field: "Office Procedure", email: "sarfaraz@example.com", domains: ["Reception Management", "Telephone Etiquette", "Visitor Handling"] },
+  { name: "Sachin", field: "Practice", email: "sachin@example.com", domains: ["Workshop Training", "Practical Exercises", "Simulation Practice"] },
+  { name: "Arjun Singh Baghel", field: "Shorthand", email: "arjun.singh@example.com", domains: ["Rapid Writing", "Symbol Systems", "Shorthand Theory"] },
+  { name: "Sachin Singh", field: "Office Procedure", email: "sachin.singh@example.com", domains: ["Mail Handling", "Appointment Scheduling", "Office Supplies"] },
+  { name: "Manjeet Kumar", field: "Practice", email: "manjeet.kumar@example.com", domains: ["On-the-job Training", "Workplace Practice", "Professional Development"] },
+  { name: "Sahil", field: "Shorthand", email: "sahil@example.com", domains: ["Dictation Practice", "Speed Building", "Transcription Skills"] },
+  { name: "Harsh", field: "Office Procedure", email: "harsh2@example.com", domains: ["Document Control", "Filing Methods", "Office Systems"] },
+  { name: "Nishant", field: "Practice", email: "nishant@example.com", domains: ["Case Studies", "Practical Learning", "Applied Knowledge"] },
+  { name: "Shubam", field: "Shorthand", email: "shubam@example.com", domains: ["Business Communication", "Report Writing", "Executive Minutes"] },
+  { name: "Anuj", field: "Office Procedure", email: "anuj@example.com", domains: ["Office Automation", "Workflow Management", "Standard Procedures"] },
+  { name: "Anuj", field: "Practice", email: "anuj2@example.com", domains: ["Vocational Training", "Skill Enhancement", "Career Practice"] },
+  { name: "Aryan Saini", field: "Shorthand", email: "aryan.saini@example.com", domains: ["Professional Shorthand", "Courtroom Stenography", "High-Speed Dictation"] }
+];
 
-        function displayStudents(filteredStudents) {
-            const grid = document.getElementById('studentsGrid');
-            const noResults = document.getElementById('noResults');
-            const displayedCount = document.getElementById('displayedStudents');
 
-            if (filteredStudents.length === 0) {
-                grid.style.display = 'none';
-                noResults.style.display = 'block';
-                displayedCount.textContent = '0';
-                return;
-            }
+    function displayStudents(filteredStudents) {
+      const grid = document.getElementById("studentsGrid");
+      const noResults = document.getElementById("noResults");
 
-            grid.style.display = 'grid';
-            noResults.style.display = 'none';
-            displayedCount.textContent = filteredStudents.length;
+      if (filteredStudents.length === 0) {
+        grid.style.display = "none";
+        noResults.style.display = "block";
+        return;
+      }
 
-            grid.innerHTML = filteredStudents.map(student => `
-                <div class="student-card">
-                    <div class="student-name">${student.name}</div>
-                    <div class="student-field">${student.field}</div>
-                    <div class="student-email">📧 ${student.email}</div>
-                    <div class="student-domains">
-                        ${student.domains.map(domain => `<span class="domain-tag">${domain}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
+      grid.style.display = "grid";
+      noResults.style.display = "none";
 
-        function filterStudents(field) {
-            if (field === 'all') {
-                displayStudents(students);
-            } else {
-                const filtered = students.filter(student => student.field === field);
-                displayStudents(filtered);
-            }
-        }
+      grid.innerHTML = filteredStudents.map(
+        (student) => `
+          <div class="student-card">
+            <div class="student-name">${student.name}</div>
+            <div class="student-field">${student.field}</div>
+            <div class="student-email"><i class="fas fa-envelope"></i> ${student.email}</div>
+            <div class="student-domains">
+              ${student.domains
+                .map((domain) => `<span class="domain-tag"><i class="fas fa-check-circle"></i> ${domain}</span>`)
+                .join("")}
+            </div>
+          </div>`
+      ).join("");
+    }
 
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                filterStudents(this.dataset.field);
-            });
-        });
-
+    function filterStudents(field) {
+      if (field === "all") {
         displayStudents(students);
-    </script>
+      } else {
+        const filtered = students.filter((s) => s.field === field);
+        displayStudents(filtered);
+      }
+    }
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+        filterStudents(this.dataset.field);
+      });
+    });
+
+    displayStudents(students);
+  </script>
 </body>
 </html>
